@@ -1,0 +1,32 @@
+{
+  "name": "@webbytes/vue-jpql-autocomplete",
+  "version": "0.1.1",
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build:package": "vue-cli-service build --target lib --name vue-jpql-autocomplete ./src/components/VueJpqlAutocomplete.vue",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "core-js": "^2.6.5",
+    "sql-where-parser": "^2.2.1",
+    "vue": "^2.6.10",
+    "vue-autosuggest": "^2.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-plugin-eslint": "^3.9.0",
+    "@vue/cli-plugin-unit-jest": "^3.9.0",
+    "@vue/cli-service": "^3.9.0",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "vue-template-compiler": "^2.6.10"
+  },
+  "main": "./dist/vue-jpql-autocomplete.common.js",
+  "files": [ "dist/*", "src/*", "public/*", "*.json", "*.js" ]
+}

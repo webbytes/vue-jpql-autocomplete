@@ -1,0 +1,97 @@
+<template>
+  <vue-autosuggest 
+    ref="autosuggest"
+    v-model="query"
+    :suggestions="suggestions"
+    :input-props="{ref:'autosuggestInput', placeholder: placeholder, class: 'autosuggest' }"
+    @input="onInputChange"
+    @focus="logEvent"
+    @selected="focusInputBox"
+    :get-suggestion-value="suggestionSelected"
+    @click="getCursorPosition">
+  </vue-autosuggest>
+</template>
+
+<script>
+import { VueAutosuggest } from 'vue-autosuggest'
+import SqlWhereParser from 'sql-where-parser'
+
+export default {
+  name: 'VueJpqlAutocomplete',
+  components: {
+    VueAutosuggest
+  },
+  data: function() {
+    return {
+      token: '',
+      tokens: [],
+      tokenType: 0, // 0-field, 1-operator, 2-value, 3-logicalop
+      suggestions: [],
+      query: ''
+    }
+  },
+  props: {
+    placeholder: String,
+    operators: Array,
+    fieldSettings: Array,
+  },
+  computed: {
+    fieldSuggestions() {
+      return this.fieldSettings.map(fs => { return fs.name; }).sort();
+    }
+  },
+  methods: {
+    logEvent: function(){},
+    focusInputBox: function() { this.$refs.autosuggest.$el.firstChild.focus(); },
+    suggestionSelected: function(val){
+      return this.query.replace(new RegExp(this.token + '$'), val.item);
+    },
+    getCursorPosition: function() {
+
+    },
+    onInputChange: function(originalVal) {
+      var val = originalVal.substring(0, this.$refs.autosuggest.$el.firstChild.selectionStart);
+      this.token = ''; 
+      var i = 0;
+      if(val.trimStart().length > 0) {
+        val = val.trimStart().replace(this.bracketsRegex,'');
+        this.tokens = val.match(this.parser);
+        //console.log(this.tokens);
+        this.token = this.tokens[this.tokens.length-1].trim();
+        i = (this.tokens.length - 1)%4;
+      }
+      switch(i) {
+        case 0: this.suggestFields(this.token); break;
+        case 1: this.suggestOperators(this.token); break;
+        case 2: this.suggestValues(this.token); break;
+        case 3: this.suggestLogicalOps(this.token); break;
+      }
+    },
+    suggestFields: function(val) {
+      this.suggestions = [{data: this.fieldSuggestions.filter(f => { return f.indexOf(val) > -1; }) }];
+    },
+    suggestOperators: function(val) {
+      val = val.toUpperCase();
+      this.suggestions = [{data: this.operators.filter(o => { return o.indexOf(val) > -1; }) }];
+    },
+    suggestValues: function(val) {
+      var fieldToken = this.tokens[this.tokens.length - 3].trim();
+      var fieldSetting = this.fieldSettings.filter(fs => { return fs.name == fieldToken; })[0];
+      this.suggestions = [{data: fieldSetting.values ? fieldSetting.values.filter(f => { return f.indexOf(val) > -1; }) : [`Provide a ${fieldSetting.type || 'text'} value for searching.`]}];
+    },
+    suggestLogicalOps: function() {
+      this.suggestions = [{data:['AND', 'OR']}];
+    }
+  },
+  mounted() {
+    this.suggestFields('');
+    var regex = '([\\s]+\'?[\\w%]+\'?|[\\w]+|[\\s]+' + this.operators.join('?|[\\s]+') + '?)';
+    this.parser = new RegExp(regex, 'ig');
+  },
+  created() {
+    this.parser = new SqlWhereParser();
+    this.bracketsRegex = /[()]/g;
+
+  }
+}
+</script>
