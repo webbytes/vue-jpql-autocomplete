@@ -4,8 +4,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:readme": "cat readme.md | marked -o ./docs/index.html",
     "build:package": "vue-cli-service build --target lib --name vue-jpql-autocomplete ./src/components/VueJpqlAutocomplete.vue",
-    "build:component": "vue-cli-service build --target wc --name vue-jpql-autocomplete --dest docs --no-clean ./src/components/VueJpqlAutocomplete.vue",
+    "build:component": "vue-cli-service build --target wc --name vue-jpql-autocomplete --dest docs ./src/components/VueJpqlAutocomplete.vue",
+    "build:docs": "npm run build:component && npm run build:readme",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
@@ -26,8 +28,15 @@
     "babel-jest": "^23.6.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "marked": "^0.7.0",
     "vue-template-compiler": "^2.6.10"
   },
   "main": "./dist/vue-jpql-autocomplete.common.js",
-  "files": [ "dist/*", "src/*", "public/*", "*.json", "*.js" ]
+  "files": [
+    "dist/*",
+    "src/*",
+    "public/*",
+    "*.json",
+    "*.js"
+  ]
 }

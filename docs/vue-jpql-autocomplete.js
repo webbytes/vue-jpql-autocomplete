@@ -1559,7 +1559,7 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"290b88f0-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueJpqlAutocomplete.vue?vue&type=template&id=6b29849a&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7c42ab1b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueJpqlAutocomplete.vue?vue&type=template&id=6b29849a&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('vue-autosuggest',{ref:"autosuggest",attrs:{"suggestions":_vm.suggestions,"input-props":{ref:'autosuggestInput', placeholder: _vm.placeholder, class: 'autosuggest' },"get-suggestion-value":_vm.suggestionSelected},on:{"input":_vm.onInputChange,"focus":_vm.logEvent,"selected":_vm.focusInputBox,"click":_vm.getCursorPosition},model:{value:(_vm.query),callback:function ($$v) {_vm.query=$$v},expression:"query"}})}
 var staticRenderFns = []
 
