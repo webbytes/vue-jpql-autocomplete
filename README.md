@@ -4,7 +4,7 @@ A VueJS component that can accept user input to be used to generate a SQL where 
 
 ## Get started using NPM
 ```
-npm install vue-jpql-autocomplete --save
+npm install @webbytes/vue-jpql-autocomplete --save
 ```
 ## Simple Usage in vue application
 In script:
