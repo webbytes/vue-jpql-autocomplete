@@ -31,9 +31,23 @@ export default {
     }
   },
   props: {
-    placeholder: String,
-    operators: Array,
-    fieldSettings: Array,
+    placeholder: {
+      type: String,
+      default: 'Type query here...'
+    },
+    operators: {
+      type: Array,
+      default: function() { return ['=','<>','>','>=','<','<='] },
+    },
+    fieldSettings: {
+      type: Array,
+      default: function() { return [
+          { name: 'status', values: ['Open','Closed'], type: 'string' },
+          { name: 'id', type: 'number' },
+          { name: 'description', type: 'string' }
+        ]; 
+      }
+    }
   },
   computed: {
     fieldSuggestions() {
