@@ -42,6 +42,7 @@ In template:
 
 ## Field Object definition
 Fied object provided as a array in the field settings property is an object having the following fields:
+
 |name|type|description|
 |---|---|---|
 |name|string|name of the field. Used for matching the field with the text typed by the user. E.g. name, description, status, etc.|
