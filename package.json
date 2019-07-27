@@ -1,10 +1,11 @@
 {
   "name": "@webbytes/vue-jpql-autocomplete",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build:package": "vue-cli-service build --target lib --name vue-jpql-autocomplete ./src/components/VueJpqlAutocomplete.vue",
+    "build:component": "vue-cli-service build --target wc --name vue-jpql-autocomplete --dest docs --no-clean ./src/components/VueJpqlAutocomplete.vue",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
