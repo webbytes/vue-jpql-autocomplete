@@ -8,9 +8,6 @@ git commit --all --message=$1
 [ -z "$2" ] && npm version patch || npm version $2
 #npm publish --access public
 
-git status
-git add --all
-git commit --all --message="Updated the package version"
 git push
 
 
