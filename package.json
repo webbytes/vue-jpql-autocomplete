@@ -1,6 +1,6 @@
 {
   "name": "@webbytes/vue-jpql-autocomplete",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -41,7 +41,7 @@
     "*.js"
   ],
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/webbytes/vue-jpql-autocomplete.git"
+    "type": "git",
+    "url": "https://github.com/webbytes/vue-jpql-autocomplete.git"
   }
 }
