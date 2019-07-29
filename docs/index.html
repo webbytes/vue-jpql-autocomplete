@@ -22,6 +22,7 @@ export default {
 }</code></pre>
 <p>In template:</p>
 <pre><code class="language-html">&lt;template&gt;
+    ...
     &lt;vue-jpql-autocomplete 
       placeholder=&quot;enter query here...&quot; 
       :field-settings=&quot;[
@@ -30,7 +31,7 @@ export default {
         { name: &#39;description&#39;, type: &#39;string&#39; }
       ]&quot;
       :operators=&quot;[&#39;=&#39;,&#39;&lt;&gt;&#39;,&#39;&gt;&#39;,&#39;&gt;=&#39;,&#39;&lt;&#39;,&#39;&lt;=&#39;]&quot;/&gt;
-
+    ...
 &lt;/template&gt;</code></pre>
 <h2 id="supported-properties">Supported properties</h2>
 <table>
@@ -43,18 +44,18 @@ export default {
 </thead>
 <tbody><tr>
 <td>placeholder</td>
-<td>string value that is used to provide the placeholder text when no value is entered in the autocomplete box.</td>
+<td>string value that is used to provide the placeholder <br/>text when no value is entered in the autocomplete box.</td>
 <td>Please enter query here...</td>
 </tr>
 <tr>
 <td>operators</td>
-<td>array of string operators supported. Does not support operators with spaces currently.</td>
+<td>array of string operators supported.<br/> Does not support operators with spaces currently.</td>
 <td>[&#39;=&#39;,&#39;&lt;&gt;&#39;,&#39;&gt;&#39;,&#39;&gt;=&#39;,&#39;&lt;&#39;,&#39;&lt;=&#39;]</td>
 </tr>
 <tr>
 <td>field-settings</td>
-<td>array of field objects that can be used for providing a lookup list for the user to pick the fields or its values from.</td>
-<td>[{ name: &#39;status&#39;, values: [&#39;Open&#39;,&#39;Closed&#39;], type: &#39;string&#39; },{ name: &#39;id&#39;, type: &#39;number&#39; },{ name: &#39;description&#39;, type: &#39;string&#39; }]</td>
+<td>array of field objects that can be used for providing <br/> a lookup list for the user to pick the fields or its values from.</td>
+<td>[{ name: &#39;status&#39;, values: [&#39;Open&#39;,&#39;Closed&#39;], type: &#39;string&#39; },<br/>{ name: &#39;id&#39;, type: &#39;number&#39; },<br/>{ name: &#39;description&#39;, type: &#39;string&#39; }]</td>
 </tr>
 </tbody></table>
 <h2 id="field-settings-object-definition">Field Settings Object definition</h2>
@@ -70,17 +71,17 @@ export default {
 <tbody><tr>
 <td>name</td>
 <td>string</td>
-<td>name of the field. Used for matching the field with the text typed by the user. E.g. name, description, status, etc.</td>
+<td>name of the field. <br/>Used for matching the field with the text typed by the user. <br/>E.g. name, description, status, etc.</td>
 </tr>
 <tr>
 <td>type</td>
 <td>string</td>
-<td>the type of the field. Used in the help text shown to user if there are no values to be picked up from. E.g. text, number, etc.</td>
+<td>the type of the field. <br/>Used in the help text shown to user if there are no values to be picked up from. <br/>E.g. text, number, etc.</td>
 </tr>
 <tr>
 <td>values</td>
 <td>Array of strings</td>
-<td>Array of string values that are matched with the user text to provide the suggestions. E.g. [&#39;Open&#39;,&#39;Closed&#39;]</td>
+<td>Array of string values <br/>that are matched with the user text to provide the suggestions. <br/>E.g. [&#39;Open&#39;,&#39;Closed&#39;]</td>
 </tr>
 </tbody></table>
 <h2 id="project-setup">Project setup</h2>

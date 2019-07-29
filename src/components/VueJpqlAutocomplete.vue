@@ -3,12 +3,17 @@
     ref="autosuggest"
     v-model="query"
     :suggestions="suggestions"
-    :input-props="{ref:'autosuggestInput', placeholder: placeholder, class: 'autosuggest' }"
+    :input-props="{placeholder: placeholder, class: 'autosuggest' }"
     @input="onInputChange"
     @focus="logEvent"
     @selected="focusInputBox"
     :get-suggestion-value="suggestionSelected"
     @click="getCursorPosition">
+
+    <slot v-for="(_, name) in $slots" :name="name" :slot="name" />
+    <template v-for="(_, name) in $scopedSlots" :slot="name" slot-scope="slotData">
+      <slot :name="name" v-bind="slotData" />
+    </template>
   </vue-autosuggest>
 </template>
 
@@ -27,7 +32,8 @@ export default {
       tokens: [],
       tokenType: 0, // 0-field, 1-operator, 2-value, 3-logicalop
       suggestions: [],
-      query: ''
+      query: '',
+      sqlParser: new SqlWhereParser()
     }
   },
   props: {
@@ -52,11 +58,21 @@ export default {
   computed: {
     fieldSuggestions() {
       return this.fieldSettings.map(fs => { return fs.name; }).sort();
+    },
+    isValid() {
+      var parsed = this.query;
+      try{
+        parsed = this.sqlParser.parse(this.query);
+      }
+      catch(err) {
+        return false;
+      }
+      return typeof parsed !== 'string'
     }
   },
   methods: {
     logEvent: function(){},
-    focusInputBox: function() { this.$refs.autosuggest.$el.firstChild.focus(); },
+    focusInputBox: function() { this.$refs.autosuggest.$el.querySelector('input.autosuggest').focus(); },
     suggestionSelected: function(val){
       return this.query.replace(new RegExp(this.token + '$'), val.item);
     },
@@ -64,7 +80,7 @@ export default {
 
     },
     onInputChange: function(originalVal) {
-      var val = originalVal.substring(0, this.$refs.autosuggest.$el.firstChild.selectionStart);
+      var val = originalVal.substring(0, this.$refs.autosuggest.$el.querySelector('input.autosuggest').selectionStart);
       this.token = ''; 
       var i = 0;
       if(val.trimStart().length > 0) {
@@ -103,7 +119,6 @@ export default {
     this.parser = new RegExp(regex, 'ig');
   },
   created() {
-    this.parser = new SqlWhereParser();
     this.bracketsRegex = /[()]/g;
 
   }

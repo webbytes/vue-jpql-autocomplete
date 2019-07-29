@@ -29,6 +29,7 @@ export default {
 In template:
 ``` html
 <template>
+    ...
     <vue-jpql-autocomplete 
       placeholder="enter query here..." 
       :field-settings="[
@@ -37,24 +38,24 @@ In template:
         { name: 'description', type: 'string' }
       ]"
       :operators="['=','<>','>','>=','<','<=']"/>
-
+    ...
 </template>
 ```
 ## Supported properties
 |Property|Description|Examples|
 |---|---|---|
-|placeholder|string value that is used to provide the placeholder text when no value is entered in the autocomplete box.|Please enter query here...|
-|operators|array of string operators supported. Does not support operators with spaces currently.|['=','<>','>','>=','<','<=']|
-|field-settings|array of field objects that can be used for providing a lookup list for the user to pick the fields or its values from.|[{ name: 'status', values: ['Open','Closed'], type: 'string' },{ name: 'id', type: 'number' },{ name: 'description', type: 'string' }]
+|placeholder|string value that is used to provide the placeholder <br/>text when no value is entered in the autocomplete box.|Please enter query here...|
+|operators|array of string operators supported.<br/> Does not support operators with spaces currently.|['=','<>','>','>=','<','<=']|
+|field-settings|array of field objects that can be used for providing <br/> a lookup list for the user to pick the fields or its values from.|[{ name: 'status', values: ['Open','Closed'], type: 'string' },<br/>{ name: 'id', type: 'number' },<br/>{ name: 'description', type: 'string' }]
 
 ## Field Settings Object definition
 Fied Settings provided as a array in the field settings property is an array of field objects having the following fields:
 
 |name|type|description|
 |---|---|---|
-|name|string|name of the field. Used for matching the field with the text typed by the user. E.g. name, description, status, etc.|
-|type|string|the type of the field. Used in the help text shown to user if there are no values to be picked up from. E.g. text, number, etc.|
-|values|Array of strings|Array of string values that are matched with the user text to provide the suggestions. E.g. ['Open','Closed']|
+|name|string|name of the field. <br/>Used for matching the field with the text typed by the user. <br/>E.g. name, description, status, etc.|
+|type|string|the type of the field. <br/>Used in the help text shown to user if there are no values to be picked up from. <br/>E.g. text, number, etc.|
+|values|Array of strings|Array of string values <br/>that are matched with the user text to provide the suggestions. <br/>E.g. ['Open','Closed']|
 
 ## Project setup
 ```

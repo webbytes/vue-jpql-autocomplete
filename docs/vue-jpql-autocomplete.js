@@ -1559,12 +1559,12 @@ function normalizeComponent (
   }
 }
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7c42ab1b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueJpqlAutocomplete.vue?vue&type=template&id=6b29849a&shadow
-var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('vue-autosuggest',{ref:"autosuggest",attrs:{"suggestions":_vm.suggestions,"input-props":{ref:'autosuggestInput', placeholder: _vm.placeholder, class: 'autosuggest' },"get-suggestion-value":_vm.suggestionSelected},on:{"input":_vm.onInputChange,"focus":_vm.logEvent,"selected":_vm.focusInputBox,"click":_vm.getCursorPosition},model:{value:(_vm.query),callback:function ($$v) {_vm.query=$$v},expression:"query"}})}
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"7c42ab1b-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueJpqlAutocomplete.vue?vue&type=template&id=6e05d038&shadow
+var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('vue-autosuggest',{ref:"autosuggest",attrs:{"suggestions":_vm.suggestions,"input-props":{placeholder: _vm.placeholder, class: 'autosuggest' },"get-suggestion-value":_vm.suggestionSelected},on:{"input":_vm.onInputChange,"focus":_vm.logEvent,"selected":_vm.focusInputBox,"click":_vm.getCursorPosition},scopedSlots:_vm._u([_vm._l((_vm.$scopedSlots),function(_,name){return {key:name,fn:function(slotData){return [_vm._t(name,null,null,slotData)]}}})],null,true),model:{value:(_vm.query),callback:function ($$v) {_vm.query=$$v},expression:"query"}},[_vm._l((_vm.$slots),function(_,name){return _vm._t(name,null,{"slot":name})})],2)}
 var staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/VueJpqlAutocomplete.vue?vue&type=template&id=6b29849a&shadow
+// CONCATENATED MODULE: ./src/components/VueJpqlAutocomplete.vue?vue&type=template&id=6e05d038&shadow
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/web.dom.iterable.js
 var web_dom_iterable = __webpack_require__("ac6a");
@@ -1608,6 +1608,11 @@ var SqlWhereParser_default = /*#__PURE__*/__webpack_require__.n(SqlWhereParser);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ var VueJpqlAutocompletevue_type_script_lang_js_shadow = ({
@@ -1622,7 +1627,8 @@ var SqlWhereParser_default = /*#__PURE__*/__webpack_require__.n(SqlWhereParser);
       tokenType: 0,
       // 0-field, 1-operator, 2-value, 3-logicalop
       suggestions: [],
-      query: ''
+      query: '',
+      sqlParser: new SqlWhereParser_default.a()
     };
   },
   props: {
@@ -1658,20 +1664,32 @@ var SqlWhereParser_default = /*#__PURE__*/__webpack_require__.n(SqlWhereParser);
       return this.fieldSettings.map(fs => {
         return fs.name;
       }).sort();
+    },
+
+    isValid() {
+      var parsed = this.query;
+
+      try {
+        parsed = this.sqlParser.parse(this.query);
+      } catch (err) {
+        return false;
+      }
+
+      return typeof parsed !== 'string';
     }
 
   },
   methods: {
     logEvent: function logEvent() {},
     focusInputBox: function focusInputBox() {
-      this.$refs.autosuggest.$el.firstChild.focus();
+      this.$refs.autosuggest.$el.querySelector('input.autosuggest').focus();
     },
     suggestionSelected: function suggestionSelected(val) {
       return this.query.replace(new RegExp(this.token + '$'), val.item);
     },
     getCursorPosition: function getCursorPosition() {},
     onInputChange: function onInputChange(originalVal) {
-      var val = originalVal.substring(0, this.$refs.autosuggest.$el.firstChild.selectionStart);
+      var val = originalVal.substring(0, this.$refs.autosuggest.$el.querySelector('input.autosuggest').selectionStart);
       this.token = '';
       var i = 0;
 
@@ -1741,7 +1759,6 @@ var SqlWhereParser_default = /*#__PURE__*/__webpack_require__.n(SqlWhereParser);
   },
 
   created() {
-    this.parser = new SqlWhereParser_default.a();
     this.bracketsRegex = /[()]/g;
   }
 

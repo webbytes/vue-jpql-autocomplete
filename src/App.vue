@@ -1,9 +1,21 @@
 <template>
   <div id="app">
     <vue-jpql-autocomplete 
+      ref="autocomplete"
       placeholder="enter query here..." 
       :field-settings="fieldSettings"
-      :operators="['=','<>','>','>=','<','<=','LIKE','IN']"/>
+      :operators="['=','<>','>','>=','<','<=']">
+
+      <template v-slot="{suggestion}">
+        option: {{suggestion.item}}
+      </template>
+      <template v-slot:before-input>
+        JPQL Serach box:
+      </template>
+      <template v-slot:after-input>
+        The query typed is {{ $refs.autocomplete.query }} which is {{ $refs.autocomplete.isValid ? 'valid' : 'invalid' }}.
+      </template>
+    </vue-jpql-autocomplete>
   </div>
 </template>
 
