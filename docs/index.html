@@ -6,6 +6,7 @@
 <li><a href="#simple-usage-in-vue-application">Simple usage in vue application</a></li>
 <li><a href="#supported-properties">Supported properties</a></li>
 <li><a href="#field-settings-object-definition">Field settings object definition</a></li>
+<li><a href="#Slots">Slots</a></li>
 <li><a href="https://webbytes.github.io/vue-jpql-autocomplete/demo.html">Demo</a></li>
 </ol>
 <h2 id="get-started-using-npm">Get started using NPM</h2>
@@ -84,6 +85,15 @@ export default {
 <td>Array of string values <br/>that are matched with the user text to provide the suggestions. <br/>E.g. [&#39;Open&#39;,&#39;Closed&#39;]</td>
 </tr>
 </tbody></table>
+<p>##Slots
+vue-jpql-autocomplete uses another vue package <a href="https://www.npmjs.com/package/vue-autosuggest">vue-autosuggest</a> for providing the search box and options. Hence many features of this component can be used as is. The most important one being the slots for providing custom content within different sections of the control. The most common ones are:</p>
+<pre><code class="language-html">&lt;template slot=&quot;before-input&quot;&gt; content before the &lt;input /&gt; goes here &lt;/template&gt;
+&lt;template slot=&quot;after-input&quot;&gt; content after the &lt;input /&gt; goes here &lt;/template&gt;
+&lt;template slot=&quot;before-suggestions&quot;&gt; content before the &lt;ul&gt; goes here &lt;/template&gt;
+&lt;template slot=&quot;after-section&quot;&gt; Default footer content for all sections &lt;/template&gt;
+&lt;template slot=&quot;after-suggestions&quot;&gt; content after the &lt;ul&gt; goes here &lt;/template&gt;
+&lt;template slot-scope=&quot;{suggestion}&quot;&gt;Content for each suggestion as {{suggestion.item}}&lt;/template&gt;</code></pre>
+<p>For complete details on how to use slots refer <a href="https://www.npmjs.com/package/vue-autosuggest#slots">here</a></p>
 <h2 id="project-setup">Project setup</h2>
 <pre><code>npm install</code></pre><h3 id="compiles-and-hot-reloads-for-development">Compiles and hot-reloads for development</h3>
 <pre><code>npm run serve</code></pre><h3 id="compiles-and-minifies-for-production">Compiles and minifies for production</h3>
