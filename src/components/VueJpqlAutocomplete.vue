@@ -124,3 +124,30 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+div, div >>> .autosuggest, div >>> .autosuggest__results-container {
+  width: 100%;
+}
+div >>> .autosuggest__results {
+  margin: 0;
+  position: absolute;
+  z-index: 10000001;
+  width: calc(100% - 20px);
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  padding: 0;
+  overflow: scroll;
+  max-height: 400px;
+}
+div >>> .autosuggest__results ul {
+  padding-inline-start: 10px;
+}
+div >>> .autosuggest__results ul li {
+  list-style: none;
+  display: block;
+  text-align: left;
+}
+</style>
