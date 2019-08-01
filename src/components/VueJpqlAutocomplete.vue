@@ -89,7 +89,6 @@ export default {
       if(val.trimStart().length > 0) {
         val = val.trimStart().replace(this.bracketsRegex,'');
         this.tokens = val.match(this.parser);
-        console.log(this.tokens);
         this.token = this.tokens[this.tokens.length-1].trim();
         i = (this.tokens.length - 1)%4;
       }
