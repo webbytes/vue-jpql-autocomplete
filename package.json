@@ -5,9 +5,10 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build:readme": "cat readme.md | marked -o ./docs/index.html",
+    "build:example": "vue-cli-service build --dest docs",
     "build:package": "vue-cli-service build --target lib --name vue-jpql-autocomplete ./src/components/VueJpqlAutocomplete.vue",
     "build:component": "vue-cli-service build --target wc --name vue-jpql-autocomplete --dest docs ./src/components/VueJpqlAutocomplete.vue",
-    "build:docs": "npm run build:component && npm run build:readme",
+    "build:docs": "npm run build:example && npm run build:readme && cp public/demo-advanced.html docs",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
