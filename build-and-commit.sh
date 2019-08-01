@@ -1,4 +1,3 @@
-npm run build:package
 npm run build:example
 
 

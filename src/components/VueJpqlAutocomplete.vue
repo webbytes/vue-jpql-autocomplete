@@ -89,6 +89,7 @@ export default {
       if(val.trimStart().length > 0) {
         val = val.trimStart().replace(this.bracketsRegex,'');
         this.tokens = val.match(this.parser);
+        console.log(this.tokens);
         this.token = this.tokens[this.tokens.length-1].trim();
         i = (this.tokens.length - 1)%4;
       }
@@ -117,7 +118,7 @@ export default {
   },
   mounted() {
     this.suggestFields('');
-    var regex = '([\\s]+\'?[\\w%]+\'?|[\\w]+|[\\s]+' + this.operators.join('?|[\\s]+') + '?)';
+    var regex = '([\\s]+\'[\\w%\\s]+\'?|[\\s]*[\\w]+|[\\s]+' + this.operators.join('?|[\\s]+') + '?)';
     this.parser = new RegExp(regex, 'ig');
   },
   created() {

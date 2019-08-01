@@ -17,7 +17,7 @@ npm install @webbytes/vue-jpql-autocomplete --save
 ## Simple Usage in vue application
 In script:
 ``` javascript
-import VueJpqlAutocomplete from './components/VueJpqlAutocomplete.vue';
+import VueJpqlAutocomplete from '@webbytes/vue-jpql-autocomplete';
 
 export default {
   ...

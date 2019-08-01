@@ -80,7 +80,7 @@
     <details>
       <summary>Script</summary>
       <pre>
-        import VueJpqlAutocomplete from 'vue-jpql-autocomplete'
+        import VueJpqlAutocomplete from '@webbytes/vue-jpql-autocomplete'
 
         export default {
           name: 'app',
