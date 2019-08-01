@@ -1,0 +1,25 @@
+<meta charset="utf-8">
+<title>vue-jpql-autocomplete demo</title>
+<script src="https://unpkg.com/vue"></script>
+<script src="./vue-jpql-autocomplete.js"></script>
+
+
+<vue-jpql-autocomplete></vue-jpql-autocomplete>
+
+<style>
+vue-jpql-autocomplete.custom {
+    /* style variable for the text box */
+    --vue-jpql-autocomplete-width: 500px;
+    --vue-jpql-autocomplete-bg: blue;
+    --vue-jpql-autocomplete-color: white;
+    --vue-jpql-autocomplete-border: black 1px solid;
+
+    /* style variables for results box */
+    --vue-jpql-autocomplete-results-width: 200px;
+    --vue-jpql-autocomplete-results-bg: black;
+    --vue-jpql-autocomplete-results-color: white;
+    --vue-jpql-autocomplete-results-border: gray 1px solid;
+}
+</style>
+
+<vue-jpql-autocomplete class="custom"></vue-jpql-autocomplete>
