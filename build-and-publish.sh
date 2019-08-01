@@ -1,11 +1,12 @@
 npm run build:package
-npm run build:docs
+npm run build:example
 
-git status
-git commit --all --message=$1
+
+git add -A && git commit -m "$1"
 git status
 
 [ -z "$2" ] && npm version patch || npm version $2
+
 npm publish --access public
 
 git push

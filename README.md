@@ -8,7 +8,7 @@ A VueJS component that can accept user input to be used to generate a SQL where 
 3. [Supported properties](#supported-properties)
 4. [Field settings object definition](#field-settings-object-definition)
 5. [Slots](#Slots)
-6. [Demo](https://webbytes.github.io/vue-jpql-autocomplete/demo-advanced.html)
+6. [Demo](https://webbytes.github.io/vue-jpql-autocomplete/index.html)
 
 ## Get started using NPM
 ```
