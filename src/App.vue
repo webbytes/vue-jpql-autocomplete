@@ -75,6 +75,10 @@
         display: block;
         text-align: left;
       }
+      li.autosuggest__results-before.autosuggest__results-before--default {
+        font-style: italic;
+        font-size: smaller;
+      }
       </pre>
     </details>
     <details>
@@ -91,9 +95,9 @@
             return {
               query: '',
               fieldSettings: [
-                { name: 'status', values: ['Open','Closed'], type: 'string' },
+                { name: 'status', values: ['Open','Closed'], type: 'text' },
                 { name: 'id', type: 'number' },
-                { name: 'description', type: 'string' }
+                { name: 'description', type: 'text' }
               ]
             }
           }
@@ -115,9 +119,9 @@ export default {
     return {
       query: '',
       fieldSettings: [
-        { name: 'status', values: ['Open','Closed'], type: 'string' },
+        { name: 'status', values: ['Open','Closed'], type: 'text' },
         { name: 'id', type: 'number' },
-        { name: 'description', type: 'string' }
+        { name: 'description', type: 'text' }
       ]
     }
   }
@@ -159,6 +163,10 @@ div, .autosuggest, .autosuggest__results-container {
   list-style: none;
   display: block;
   text-align: left;
+}
+li.autosuggest__results-before.autosuggest__results-before--default {
+  font-style: italic;
+  font-size: smaller;
 }
 #app, details, pre {
   text-align: left;

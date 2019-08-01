@@ -51,9 +51,9 @@ export default {
     fieldSettings: {
       type: Array,
       default: function() { return [
-          { name: 'status', values: ['Open','Closed'], type: 'string' },
+          { name: 'status', values: ['Open','Closed'], type: 'text' },
           { name: 'id', type: 'number' },
-          { name: 'description', type: 'string' }
+          { name: 'description', type: 'text' }
         ]; 
       }
     }
@@ -100,16 +100,25 @@ export default {
       }
     },
     suggestFields: function(val) {
-      this.suggestions = [{ name: 'Fields', data: this.fieldSuggestions.filter(f => { return f.indexOf(val) > -1; }) }];
+      val = val.toLowerCase();
+      this.suggestions = [{ label: 'Fields', data: this.fieldSuggestions.filter(f => { return f.toLowerCase().indexOf(val) > -1; }) }];
     },
     suggestOperators: function(val) {
       val = val.toUpperCase();
-      this.suggestions = [{name: 'Operators', data: this.operators.filter(o => { return o.indexOf(val) > -1; }) }];
+      this.suggestions = [{label: 'Operators', data: this.operators.filter(o => { return o.indexOf(val) > -1; }) }];
     },
     suggestValues: function(val) {
       var fieldToken = this.tokens[this.tokens.length - 3].trim();
       var fieldSetting = this.fieldSettings.filter(fs => { return fs.name == fieldToken; })[0];
-      this.suggestions = [{name: 'Values', data: fieldSetting.values ? fieldSetting.values.filter(f => { return f.indexOf(val) > -1; }) : [`Provide a ${fieldSetting.type || 'text'} value for searching.`]}];
+      var values = ["''"];
+      if(fieldSetting.values) {
+        values = fieldSetting.values ? fieldSetting.values.filter(f => { return f.toLowerCase().indexOf(val) > -1; }) : null;
+        if(fieldSetting.type == 'text') values = values.map(v => { return "'" + v + "'"});
+      }
+      this.suggestions = [{
+        label: fieldSetting.values ? 'Values' : `Hint: Provide a ${fieldSetting.type || 'text'} value for ${fieldToken}.`, 
+        data: values
+      }]
     },
     suggestLogicalOps: function() {
       this.suggestions = [{name: 'Logical Operators', data:['AND', 'OR']}];

@@ -34,9 +34,9 @@ In template:
     <vue-jpql-autocomplete 
       placeholder="enter query here..." 
       :field-settings="[
-        { name: 'status', values: ['Open','Closed'], type: 'string' },
+        { name: 'status', values: ['Open','Closed'], type: 'text' },
         { name: 'id', type: 'number' },
-        { name: 'description', type: 'string' }
+        { name: 'description', type: 'text' }
       ]"
       :operators="['=','<>','>','>=','<','<=']"/>
     ...
@@ -47,7 +47,7 @@ In template:
 |---|---|---|
 |placeholder|string value that is used to provide the placeholder <br/>text when no value is entered in the autocomplete box.|Please enter query here...|
 |operators|array of string operators supported.<br/> Does not support operators with spaces currently.|['=','<>','>','>=','<','<=']|
-|field-settings|array of field objects that can be used for providing <br/> a lookup list for the user to pick the fields or its values from.|[{ name: 'status', values: ['Open','Closed'], type: 'string' },<br/>{ name: 'id', type: 'number' },<br/>{ name: 'description', type: 'string' }]
+|field-settings|array of field objects that can be used for providing <br/> a lookup list for the user to pick the fields or its values from.|[{ name: 'status', values: ['Open','Closed'], type: 'text' },<br/>{ name: 'id', type: 'number' },<br/>{ name: 'description', type: 'text' }]
 
 ## Field Settings Object definition
 Fied Settings provided as a array in the field settings property is an array of field objects having the following fields:
