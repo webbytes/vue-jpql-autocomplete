@@ -43,5 +43,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/webbytes/vue-jpql-autocomplete.git"
-  }
+  },
+  "keywords": ["vuejs","jpql","autocomplete","autosuggest","sql","where","clause","search","criteria"]
 }
