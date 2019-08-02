@@ -1,6 +1,6 @@
 {
   "name": "@webbytes/vue-jpql-autocomplete",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -44,5 +44,15 @@
     "type": "git",
     "url": "https://github.com/webbytes/vue-jpql-autocomplete.git"
   },
-  "keywords": ["vuejs","jpql","autocomplete","autosuggest","sql","where","clause","search","criteria"]
+  "keywords": [
+    "vuejs",
+    "jpql",
+    "autocomplete",
+    "autosuggest",
+    "sql",
+    "where",
+    "clause",
+    "search",
+    "criteria"
+  ]
 }
