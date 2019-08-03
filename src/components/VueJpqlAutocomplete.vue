@@ -79,24 +79,50 @@ export default {
     logEvent: function(){},
     focusInputBox: function() { this.$refs.autosuggest.$el.querySelector('input.autosuggest').focus(); },
     suggestionSelected: function(val){
-      return this.query.replace(new RegExp(this.token + '$'), val.item);
+      var token = this.token;
+      if(this.tokens['operator2'] && this.tokens['operator2'].trim().toUpperCase() == 'IN') {
+        var selectedValues = token.replace(/[[\]]/ig,'').split(',').map(v => { return v.replace(/'/g,'').trim(); });
+        token = selectedValues.length > 0 ? selectedValues[selectedValues.length - 1] : '';
+      }
+      this.query = this.query
+                  .substring(0, this.searchBox.selectionStart)
+                  .replace(new RegExp(token + '$'), val.item) +
+              this.query.substring(this.searchBox.selectionStart);
+      this.$emit('input', this.query);
+      return this.query;
     },
     onInputChange: function(originalVal) {
       this.$emit('input', originalVal);
-      var val = originalVal.substring(0, this.$refs.autosuggest.$el.querySelector('input.autosuggest').selectionStart);
+      var val = originalVal
+                  .substring(0, this.searchBox.selectionStart)
+                  .trimStart();
       this.token = ''; 
-      var i = 0;
-      if(val.trimStart().length > 0) {
-        val = val.trimStart().replace(this.bracketsRegex,'');
-        this.tokens = val.match(this.parser);
-        this.token = this.tokens[this.tokens.length-1].trim();
-        i = (this.tokens.length - 1)%4;
+      this.tokenType = 'field';
+      if(val.length > 0) {
+        val = ' ' + val
+                      .replace(this.multiSpaceRegex, ' ')
+                      .replace(this.inBracketRegex, 'IN [$1]')
+                      .replace(this.bracketsRegex,'')
+                      .replace(this.multiSpaceRegex, ' ');
+        this.tokens = (new RegExp(this.regex, 'ig')).exec(val);
+        if(!this.tokens) return;
+        this.tokens = this.tokens.groups;
+        var tokenTypes = ['logicalop','values','operator','field'];
+        for(var g = 0; g < tokenTypes.length; g++) {
+          var group = tokenTypes[g];
+          this.token = this.tokens[group + '3'] || this.tokens[group + '2'] || this.tokens[group + '1'] || this.tokens[group];
+          if(this.token) {
+            this.tokenType = group;
+            this.token = this.token.trim();
+            break;
+          }
+        }
       }
-      switch(i) {
-        case 0: this.suggestFields(this.token); break;
-        case 1: this.suggestOperators(this.token); break;
-        case 2: this.suggestValues(this.token); break;
-        case 3: this.suggestLogicalOps(this.token); break;
+      switch(this.tokenType) {
+        case 'field': this.suggestFields(this.token); break;
+        case 'operator': this.suggestOperators(this.token); break;
+        case 'values': this.suggestValues(this.token); break;
+        case 'logicalop': this.suggestLogicalOps(this.token); break;
       }
     },
     suggestFields: function(val) {
@@ -108,11 +134,16 @@ export default {
       this.suggestions = [{label: 'Operators', data: this.operators.filter(o => { return o.indexOf(val) > -1; }) }];
     },
     suggestValues: function(val) {
-      var fieldToken = this.tokens[this.tokens.length - 3].trim();
+      var selectedValues = [];
+      var fieldToken = (this.tokens['field2']).trim();
+      if(val.length > 0 && this.tokens['operator2'].trim().toUpperCase() == 'IN') {
+        selectedValues = val.replace(/[[\]]/ig,'').split(',').map(v => { return v.replace(/'/g,'').trim(); });
+        val = selectedValues.length > 0 ? selectedValues[selectedValues.length - 1].toLowerCase() : '';
+      }
       var fieldSetting = this.fieldSettings.filter(fs => { return fs.name == fieldToken; })[0];
       var values = ["''"];
       if(fieldSetting.values) {
-        values = fieldSetting.values ? fieldSetting.values.filter(f => { return f.toLowerCase().indexOf(val) > -1; }) : null;
+        values = fieldSetting.values ? fieldSetting.values.filter(f => { return !selectedValues.includes(f) && f.toLowerCase().indexOf(val) > -1; }) : null;
         if(fieldSetting.type == 'text') values = values.map(v => { return "'" + v + "'"});
       }
       this.suggestions = [{
@@ -126,12 +157,15 @@ export default {
   },
   mounted() {
     this.suggestFields('');
-    var regex = '([\\s]+\'[\\w%\\s]+\'?|[\\s]*[\\w]+|[\\s]+' + this.operators.join('?|[\\s]+') + '?)';
-    this.parser = new RegExp(regex, 'ig');
+    this.searchBox = this.$refs.autosuggest.$el.querySelector('input.autosuggest');
+    var ops = this.operators.sort((o1,o2) => { return o2.length -o1.length; }).join('|');
+    var fields = '(?<field3>[\\s](?!and|or)[\\w]+)';
+    this.regex = `(?:${fields}(?<operator3>[\\s](?:${ops}))(?<values3>[\\s](?:[\\w]+|'[\\w\\s%]*'|\\[[\\w%,\\s']*\\]))(?<logicalop3>[\\s](?:AND|OR)?)|(?<field2>[\\s](?!and|or)[\\w]+)(?<operator2>[\\s](?:${ops}))(?<values2>[\\s](?:[\\w]+|'[\\w\\s%]*'?|\\[[\\w%,\\s']*\\]?)?)|(?<field1>[\\s](?!and|or)[\\w]+)(?<operator1>[\\s](?:${ops})?)|(?<field>[\\s](?!and|or)[\\w]*))$`;
   },
   created() {
     this.bracketsRegex = /[()]/g;
-
+    this.inBracketRegex = /IN\s\(([',\s\w]*)\)?/ig;
+    this.multiSpaceRegex = /\s\s+/g;
   }
 }
 </script>

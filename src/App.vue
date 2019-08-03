@@ -16,7 +16,7 @@
       v-model="query"
       placeholder="enter query here..." 
       :field-settings="fieldSettings"
-      :operators="['=','<>','>','>=','<','<=']">
+      :operators="['=','<>','>','>=','<','<=','LIKE','IN']">
       <template v-slot="{suggestion}">
         {{suggestion.name}}: {{suggestion.item}}
       </template>
