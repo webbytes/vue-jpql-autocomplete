@@ -95,7 +95,6 @@ export default {
       return this.query;
     },
     onInputChange: function(originalVal, cursorPosition) {
-      console.log(originalVal, cursorPosition || this.searchBox.selectionStart);
       this.$emit('input', originalVal);
       var val = originalVal
                   .substring(0, cursorPosition || this.searchBox.selectionStart)
@@ -109,11 +108,9 @@ export default {
                       .replace(this.bracketsRegex,'')
                       .replace(this.multiSpaceRegex, ' ');
         this.tokens = (new RegExp(this.regex, 'ig')).exec(val);
-        console.log(val, this.tokens);
 
         if(!this.tokens) return;
         this.tokens = this.tokens.groups;
-        console.log(val, this.tokens);
         var tokenTypes = ['logicalop','values','operator','field'];
         for(var g = 0; g < tokenTypes.length; g++) {
           var group = tokenTypes[g];
