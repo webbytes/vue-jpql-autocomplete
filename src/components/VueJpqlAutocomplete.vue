@@ -77,7 +77,10 @@ export default {
   },
   methods: {
     logEvent: function(){},
-    focusInputBox: function() { this.$refs.autosuggest.$el.querySelector('input.autosuggest').focus(); },
+    focusInputBox: function() { 
+      this.searchBox.focus();
+      this.onInputChange(this.query, this.query.length);
+    },
     suggestionSelected: function(val){
       var token = this.token;
       if(this.tokens['operator2'] && this.tokens['operator2'].trim().toUpperCase() == 'IN') {
@@ -88,13 +91,14 @@ export default {
                   .substring(0, this.searchBox.selectionStart)
                   .replace(new RegExp(token + '$'), val.item) +
               this.query.substring(this.searchBox.selectionStart);
-      this.$emit('input', this.query);
+      this.token = val.item;
       return this.query;
     },
-    onInputChange: function(originalVal) {
+    onInputChange: function(originalVal, cursorPosition) {
+      console.log(originalVal, cursorPosition || this.searchBox.selectionStart);
       this.$emit('input', originalVal);
       var val = originalVal
-                  .substring(0, this.searchBox.selectionStart)
+                  .substring(0, cursorPosition || this.searchBox.selectionStart)
                   .trimStart();
       this.token = ''; 
       this.tokenType = 'field';
@@ -105,8 +109,11 @@ export default {
                       .replace(this.bracketsRegex,'')
                       .replace(this.multiSpaceRegex, ' ');
         this.tokens = (new RegExp(this.regex, 'ig')).exec(val);
+        console.log(val, this.tokens);
+
         if(!this.tokens) return;
         this.tokens = this.tokens.groups;
+        console.log(val, this.tokens);
         var tokenTypes = ['logicalop','values','operator','field'];
         for(var g = 0; g < tokenTypes.length; g++) {
           var group = tokenTypes[g];
