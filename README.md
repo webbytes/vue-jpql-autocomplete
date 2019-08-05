@@ -46,7 +46,7 @@ In template:
 |Property|Description|Examples|
 |---|---|---|
 |placeholder|string value that is used to provide the placeholder <br/>text when no value is entered in the autocomplete box.|Please enter query here...|
-|operators|array of string operators supported.<br/> Does not support operators with spaces currently.|['=','<>','>','>=','<','<=']|
+|operators|array of string operators supported.<br/> Should be a subset ['LIKE','IN','<>','<=','>=','=','<','>']|['=','<>','>','>=','<','<=']|
 |field-settings|array of field objects that can be used for providing <br/> a lookup list for the user to pick the fields or its values from.|[{ name: 'status', values: ['Open','Closed'], type: 'text' },<br/>{ name: 'id', type: 'number' },<br/>{ name: 'description', type: 'text' }]
 
 ## Field Settings Object definition
@@ -69,7 +69,8 @@ vue-jpql-autocomplete uses another vue package [vue-autosuggest](https://www.npm
 <template slot="after-suggestions"> content after the <ul> goes here </template>
 <template slot-scope="{suggestion}">Content for each suggestion as {{suggestion.item}}</template>
 ```
-For complete details on how to use slots refer [here](https://www.npmjs.com/package/vue-autosuggest#slots)
+For complete details on how to use slots refer [here](https://www.npmjs.com/package/vue-autosuggest#slots).<br/>
+Using scoped slots, one can easily change the displayed options of the suggestions.
 
 ## Project setup
 ```

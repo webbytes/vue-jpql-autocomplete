@@ -19,6 +19,7 @@
 <script>
 import { VueAutosuggest } from 'vue-autosuggest'
 import SqlWhereParser from 'sql-where-parser'
+import RC from '@/components/RegexConstants.js'
 
 export default {
   name: 'VueJpqlAutocomplete',
@@ -29,7 +30,7 @@ export default {
     return {
       token: '',
       tokens: [],
-      tokenType: 0, // 0-field, 1-operator, 2-value, 3-logicalop
+      tokenType: 0, // field, operator, value, logicalop
       suggestions: [],
       query: '',
       sqlParser: new SqlWhereParser()
@@ -46,7 +47,7 @@ export default {
     },
     operators: {
       type: Array,
-      default: function() { return ['=','<>','>','>=','<','<='] },
+      default: function() { return ['=','<>','>','>=','<','<=','LIKE','IN'] },
     },
     fieldSettings: {
       type: Array,
@@ -73,6 +74,9 @@ export default {
       var isValid = !parsed || (parsed && typeof parsed !== 'string' && JSON.stringify(parsed).indexOf('null') == -1);
       this.$refs.autosuggest.$el.querySelector('input.autosuggest').setAttribute('aria-invalid', isValid ? 'false' : 'true');
       return isValid;
+    },
+    ops() {
+      return this.operators.slice().sort((o1,o2) => { return o2.length - o1.length; }).join('|');
     }
   },
   methods: {
@@ -103,10 +107,10 @@ export default {
       this.tokenType = 'field';
       if(val.length > 0) {
         val = ' ' + val
-                      .replace(this.multiSpaceRegex, ' ')
-                      .replace(this.inBracketRegex, 'IN [$1]')
-                      .replace(this.bracketsRegex,'')
-                      .replace(this.multiSpaceRegex, ' ');
+                      .replace(RC.multiSpaceRegex, ' ')
+                      .replace(RC.inBracketRegex, 'IN [$1]')
+                      .replace(RC.bracketsRegex,'')
+                      .replace(RC.multiSpaceRegex, ' ');
         this.tokens = (new RegExp(this.regex, 'ig')).exec(val);
 
         if(!this.tokens) return;
@@ -114,7 +118,7 @@ export default {
         var tokenTypes = ['logicalop','values','operator','field'];
         for(var g = 0; g < tokenTypes.length; g++) {
           var group = tokenTypes[g];
-          this.token = this.tokens[group + '3'] || this.tokens[group + '2'] || this.tokens[group + '1'] || this.tokens[group];
+          this.token = this.tokens[group + '3'] || this.tokens[group + '2'] || this.tokens[group + '1'] || this.tokens[group + '0'];
           if(this.token) {
             this.tokenType = group;
             this.token = this.token.trim();
@@ -145,6 +149,7 @@ export default {
         val = selectedValues.length > 0 ? selectedValues[selectedValues.length - 1].toLowerCase() : '';
       }
       var fieldSetting = this.fieldSettings.filter(fs => { return fs.name == fieldToken; })[0];
+      if(!fieldSetting) return;
       var values = ["''"];
       if(fieldSetting.values) {
         values = fieldSetting.values ? fieldSetting.values.filter(f => { return !selectedValues.includes(f) && f.toLowerCase().indexOf(val) > -1; }) : null;
@@ -162,14 +167,13 @@ export default {
   mounted() {
     this.suggestFields('');
     this.searchBox = this.$refs.autosuggest.$el.querySelector('input.autosuggest');
-    var ops = this.operators.sort((o1,o2) => { return o2.length -o1.length; }).join('|');
-    var fields = '(?<field3>[\\s](?!and|or)[\\w]+)';
-    this.regex = `(?:${fields}(?<operator3>[\\s](?:${ops}))(?<values3>[\\s](?:[\\w]+|'[\\w\\s%]*'|\\[[\\w%,\\s']*\\]))(?<logicalop3>[\\s](?:AND|OR)?)|(?<field2>[\\s](?!and|or)[\\w]+)(?<operator2>[\\s](?:${ops}))(?<values2>[\\s](?:[\\w]+|'[\\w\\s%]*'?|\\[[\\w%,\\s']*\\]?)?)|(?<field1>[\\s](?!and|or)[\\w]+)(?<operator1>[\\s](?:${ops})?)|(?<field>[\\s](?!and|or)[\\w]*))$`;
   },
   created() {
-    this.bracketsRegex = /[()]/g;
-    this.inBracketRegex = /IN\s\(([',\s\w]*)\)?/ig;
-    this.multiSpaceRegex = /\s\s+/g;
+    var operator = `[\\s](?:${this.ops})`;
+    this.regex = `(?:(?<field3>${RC.field}+)(?<operator3>${operator})(?<values3>[\\s](?:[\\w]+|'[\\w\\s%]*'|\\[[\\w%,\\s']*\\]))(?<logicalop3>${RC.logicalop}?)` +
+                   `|(?<field2>${RC.field}+)(?<operator2>${operator})(?<values2>[\\s](?:[\\w]+|'[\\w\\s%]*'?|\\[[\\w%,\\s']*\\]?)?)` +
+                   `|(?<field1>${RC.field}+)(?<operator1>${operator}?)` +
+                   `|(?<field0>${RC.field}*))$`;
   }
 }
 </script>
