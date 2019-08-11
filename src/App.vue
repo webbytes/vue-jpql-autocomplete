@@ -97,7 +97,19 @@
               fieldSettings: [
                 { name: 'status', values: ['Open','Closed'], type: 'text' },
                 { name: 'id', type: 'number' },
-                { name: 'description', type: 'text' }
+                { name: 'description', type: 'text' },
+                { name: 'category', type: 'text', values: function(val) { 
+                    val = val.toLowerCase();
+                    return new Promise(function(resolve) {
+                      // Can be ajax call or any other custom logic
+                      setTimeout(function() {
+                        resolve(['Category A','Category B','Category C'].filter(v => { 
+                          return v.toLowerCase().indexOf(val) != -1;
+                        }));
+                      }, 300);
+                    });
+                  }
+                }
               ]
             }
           }
@@ -121,7 +133,19 @@ export default {
       fieldSettings: [
         { name: 'status', values: ['Open','Closed'], type: 'text' },
         { name: 'id', type: 'number' },
-        { name: 'description', type: 'text' }
+        { name: 'description', type: 'text' },
+        { name: 'category', type: 'text', values: function(val) { 
+            val = val.toLowerCase();
+            return new Promise(function(resolve) {
+              // Can be ajax call or any other custom logic
+              setTimeout(function() {
+                resolve(['Category A','Category B','Category C'].filter(v => { 
+                  return v.toLowerCase().indexOf(val) != -1;
+                }));
+              }, 300);
+            });
+          }
+        }
       ]
     }
   }

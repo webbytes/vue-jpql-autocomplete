@@ -1,0 +1,10 @@
+[
+    {
+        "scenario": "fields",
+        "query": "",
+        "expectedSuggestions": ["description","id","status"],
+        "suggestionIndex": 1,
+        "expectedQuery": "description"
+    }
+
+]

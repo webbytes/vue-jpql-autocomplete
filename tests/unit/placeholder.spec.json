@@ -1,0 +1,12 @@
+[
+    {
+        "scenario": "simple placeholder",
+        "placeholder" : "Enter your query here...",
+        "expectedPlaceholder": "Enter your query here..."
+    },
+    {
+        "scenario": "default placeholder",
+        "expectedPlaceholder": "Type query here..."
+    }
+
+]

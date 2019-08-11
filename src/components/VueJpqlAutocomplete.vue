@@ -141,7 +141,7 @@ export default {
       val = val.toUpperCase();
       this.suggestions = [{label: 'Operators', data: this.operators.filter(o => { return o.indexOf(val) > -1; }) }];
     },
-    suggestValues: function(val) {
+    suggestValues: async function(val) {
       var selectedValues = [];
       var fieldToken = (this.tokens['field2']).trim();
       if(val.length > 0 && this.tokens['operator2'].trim().toUpperCase() == 'IN') {
@@ -152,7 +152,12 @@ export default {
       if(!fieldSetting) return;
       var values = ["''"];
       if(fieldSetting.values) {
-        values = fieldSetting.values ? fieldSetting.values.filter(f => { return !selectedValues.includes(f) && f.toLowerCase().indexOf(val) > -1; }) : null;
+        if(typeof fieldSetting.values == 'function') {
+          var resp = fieldSetting.values.call(this, val);
+          if(resp instanceof Promise) values = await resp;
+        } else {
+          values = fieldSetting.values ? fieldSetting.values.filter(f => { return !selectedValues.includes(f) && f.toLowerCase().indexOf(val) > -1; }) : null;
+        }
         if(fieldSetting.type == 'text') values = values.map(v => { return "'" + v + "'"});
       }
       this.suggestions = [{
