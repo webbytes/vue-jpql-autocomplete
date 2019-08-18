@@ -153,7 +153,7 @@ export default {
       var values = ["''"];
       if(fieldSetting.values) {
         if(typeof fieldSetting.values == 'function') {
-          var resp = fieldSetting.values.call(this, val);
+          var resp = fieldSetting.values.call(this, val, fieldSetting.name);
           if(resp instanceof Promise) values = await resp;
         } else {
           values = fieldSetting.values ? fieldSetting.values.filter(f => { return !selectedValues.includes(f) && f.toLowerCase().indexOf(val) > -1; }) : null;

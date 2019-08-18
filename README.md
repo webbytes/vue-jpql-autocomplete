@@ -56,7 +56,7 @@ Fied Settings provided as a array in the field settings property is an array of 
 |---|---|---|
 |name|string|name of the field. <br/>Used for matching the field with the text typed by the user. <br/>E.g. name, description, status, etc.|
 |type|string|the type of the field. <br/>Used in the help text shown to user if there are no values to be picked up from. <br/>E.g. text, number, etc.|
-|values|Array of strings<br/>OR<br/>Function (string value) : Promise|Array of string values <br/>that are matched with the user text to provide the suggestions. <br/>E.g. ['Open','Closed']<br/>OR<br/>Function that accepts entered value as string and returns a Promise object that will be resolved|
+|values|Array of strings<br/>OR<br/>Function (string value) : Promise|Array of string values <br/>that are matched with the user text to provide the suggestions. <br/>E.g. ['Open','Closed']<br/>OR<br/>Function that accepts entered value and field name as strings and returns a Promise object that will be resolved|
 
 ## Slots
 vue-jpql-autocomplete uses another vue package [vue-autosuggest](https://www.npmjs.com/package/vue-autosuggest) for providing the search box and options. Hence many features of this component can be used as is. The most important one being the slots for providing custom content within different sections of the control. The most common ones are:
