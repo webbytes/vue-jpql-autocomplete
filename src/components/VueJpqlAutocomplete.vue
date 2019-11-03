@@ -49,6 +49,10 @@ export default {
       type: Array,
       default: function() { return ['=','<>','>','>=','<','<=','LIKE','IN'] },
     },
+    suggestOnSelect: {
+      type: Boolean,
+      default: false,
+    },
     fieldSettings: {
       type: Array,
       default: function() { return [
@@ -83,7 +87,10 @@ export default {
     logEvent: function(){},
     focusInputBox: function() { 
       this.searchBox.focus();
+      if(this.suggestOnSelect && (!this.tokenType || this.tokenType != 'values'))
+        this.query += ' '; 
       this.onInputChange(this.query, this.query.length);
+      this.searchBox.click();
     },
     suggestionSelected: function(val){
       var token = this.token;

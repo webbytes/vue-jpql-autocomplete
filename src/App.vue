@@ -16,7 +16,8 @@
       v-model="query"
       placeholder="enter query here..." 
       :field-settings="fieldSettings"
-      :operators="['=','<>','>','>=','<','<=','LIKE','IN']">
+      :operators="['=','<>','>','>=','<','<=','LIKE','IN']"
+      :suggest-on-select="true">
       <template v-slot="{suggestion}">
         {{suggestion.name}}: {{suggestion.item}}
       </template>
@@ -33,7 +34,8 @@
         v-model="query"
         placeholder="enter query here..." 
         :field-settings="fieldSettings"
-        :operators="['LIKE','IN','=','&lt;&gt;','&gt;','&gt;=','&lt;','&lt;=']"&gt;
+        :operators="['LIKE','IN','=','&lt;&gt;','&gt;','&gt;=','&lt;','&lt;=']"
+        :suggest-on-select="true"&gt;
         &lt;template v-slot="{{ '{suggestion}' }}"&gt;
           {{ '\{\{suggestion.name\}\}'}}: {{'\{\{suggestion.item\}\}'}}
         &lt;/template&gt;

@@ -52,7 +52,8 @@ In template:
 |---|---|---|
 |placeholder|string value that is used to provide the placeholder <br/>text when no value is entered in the autocomplete box.|Please enter query here...|
 |operators|array of string operators supported.<br/> Should be a subset ['LIKE','IN','<>','<=','>=','=','<','>']|['=','<>','>','>=','<','<=']|
-|field-settings|array of field objects that can be used for providing <br/> a lookup list for the user to pick the fields or its values from.|[{ name: 'status', values: ['Open','Closed'], type: 'text' },<br/>{ name: 'id', type: 'number' },<br/>{ name: 'description', type: 'text' }]
+|field-settings|array of field objects that can be used for providing <br/> a lookup list for the user to pick the fields or its values from.|[{ name: 'status', values: ['Open','Closed'], type: 'text' },<br/>{ name: 'id', type: 'number' },<br/>{ name: 'description', type: 'text' }]|
+|suggest-on-select|boolean value used to set preference for auto suggestions to appear on selection of previous value. Defaut false.| true or false|
 
 ## Field Settings Object definition
 Fied Settings provided as a array in the field settings property is an array of field objects having the following fields:
