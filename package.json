@@ -1,6 +1,6 @@
 {
   "name": "@webbytes/vue-jpql-autocomplete",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
